@@ -1,0 +1,35 @@
+<html>
+<head>
+  <title>Predator/Prey Discrete</title>
+</head>
+<body>
+<h1>Discrete Predator/Prey Simulator</h1>
+
+<span name="phase" id="phase" style="font-size: 20pt">
+Place predators
+</span>
+<br/><br/>
+
+<span name="board" id="board">
+</span>
+
+<br/><br/>
+<span id='stepperspan'>
+<input type='button' id='stepper' value="Run Simulation" hidden=true>
+</span>
+
+<h1>Help/About</h1>
+This simulator models a predator/prey system.
+Whenever a predator and a prey end on the same tile, the prey dies and the predator produces 1 offspring.
+Each full couple of <i>surviving</i> prey produce one offspring each round.
+
+In each phase of the simulation, you will first place the predators and then place the prey.
+The message the top of the screen tells you whether you are currently placing predators or prey,
+and how many are available.
+You can place preadtors/prey by checking boxes. Once you place enough predators, you will immediately be asked to place the prey.
+After placing the predators, the full board is revealed. You must then press a button to continue on to the next epoch.
+
+The game continues until one class goes extinct.
+<script type="text/javascript" src="pp.js"></script>
+</body>
+</html>
