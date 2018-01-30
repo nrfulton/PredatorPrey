@@ -152,27 +152,20 @@ function step() {
   debug("Reproduction created new prey: " + Math.floor(STATE['numPrey'] / 2));
   STATE['numPrey'] += Math.floor(STATE['numPrey'] / 2);
 
-  var done = STATE['numPrey'] <= 0 || STATE['numPredators'] >= 0;
-  if(!done) {
-    printState();
+  document.getElementById('stepper').hidden = true; //hide the button.
+  debug(overlaps + " overlaps");
+  alert('There are now ' + STATE['numPredators'] + ' predators and ' + STATE['numPrey'] + ' prey');
+
+  //And start a new round or exit if done.
+  if(STATE['numPrey'] == 0) {
+    alert('all prey are dead; game over');
+  }
+  else if(STATE['numPredators'] == 0) {
+    alert('all preadators are dead: game over');
   }
   else {
-    debug(overlaps + " overlaps");
-    alert('There are now ' + STATE['numPredators'] + ' predators and ' + STATE['numPrey'] + ' prey');
-
-    //And start a new round or exit if done.
-    if(STATE['numPrey'] == 0) {
-      alert('all prey are dead; game over');
-      document.getElementById('stepper').hidden = true;
-    }
-    else if(STATE['numPredators'] == 0) {
-      document.getElementById('stepper').hidden = true;
-      alert('all preadators are dead: game over');
-    }
-    else {
-      initializeBoard();
-      predatorSetup(); 
-    }
+    initializeBoard();
+    predatorSetup(); 
   }
 }
 
