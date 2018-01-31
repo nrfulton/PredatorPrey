@@ -1,6 +1,6 @@
 /* The number of rows and columns in the board. */
-var ROWS = 4;
-var COLS = 4;
+var ROWS = 8;
+var COLS = 8;
 
 /* global state. Note: these values are used to initialize the game. */
 var STATE = {
@@ -134,7 +134,7 @@ function savePrey() {
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 function simulate() { 
-  document.getElementById('phase').innerHTML = "Simulation (C = predator, M = prey)";
+  document.getElementById('phase').innerHTML = "Simulation (P = panther, B = bunny)";
   document.getElementById('stepper').hidden = false;
   document.getElementById('stepper').onclick = function(event) { step(); }
   printState();
@@ -146,11 +146,11 @@ function step() {
 
   // Whenever there's an overlap, the predator reproduces and the prey dies.
   var overlaps = countOverlaps();
-  STATE['numPredators'] = Math.min(STATE['numPredators'] + overlaps, ROWS*COLS);
+  STATE['numPredators'] = Math.min(Math.floor((3*STATE['numPredators'])/4) + overlaps, ROWS*COLS);
   STATE['numPrey'] = Math.min(STATE['numPrey'] - overlaps, ROWS*COLS);
-  // The surviving prey couple up and reproduce.
-  debug("Reproduction created new prey: " + Math.floor(STATE['numPrey'] / 2));
-  STATE['numPrey'] += Math.floor(STATE['numPrey'] / 2);
+  // The surviving prey spawn buds.
+  debug("Reproduction created new prey: " + Math.floor(STATE['numPrey'] * 2));
+  STATE['numPrey'] = Math.floor(STATE['numPrey'] * 2);
 
   document.getElementById('stepper').hidden = true; //hide the button.
   debug(overlaps + " overlaps");
@@ -161,7 +161,7 @@ function step() {
     alert('all prey are dead; game over');
   }
   else if(STATE['numPredators'] == 0) {
-    alert('all preadators are dead: game over');
+    alert('all predators are dead: game over');
   }
   else {
     initializeBoard();
@@ -203,8 +203,8 @@ function printState() {
       html += "<td>";
       var hasPredator = predatorAt([row,col]);
       var hasPrey = preyAt([row,col]);
-      if(hasPredator) html += "C";
-      if(hasPrey) html += "M";
+      if(hasPredator) html += "P";
+      if(hasPrey) html += "B";
       if(!hasPredator && !hasPrey) html += "-";
       
       html += "</td>";
@@ -238,6 +238,8 @@ function debug(msg) {
 // MAIN
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
+STATE['numPredators'] = prompt("Enter initial number of predators:");
+STATE['numPrey'] = prompt("Enter initial number of prey:");
 initializeBoard();
 predatorSetup();
 
