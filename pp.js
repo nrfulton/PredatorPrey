@@ -92,7 +92,7 @@ function savePredators() {
 /** Prepares the board for prey's choice of locations. */
 function preySetup() {
   debug("PLACE PREY");
-  document.getElementById('phase').innerHTML = "Place " + STATE['numPrey'] + " prey";
+  document.getElementById('phase').innerHTML = "Place " + Math.min(STATE['numPrey'], ROWS*COLS) + " prey";
   uncheckBoxesAndSetListener(selectPrey);
 }
 
@@ -109,7 +109,7 @@ function selectPrey() {
     }
   }
 
-  var numUnplaced = STATE['numPrey'] - selectedCount;
+  var numUnplaced = Math.min(STATE['numPrey'], ROWS*COLS) - selectedCount;
   if(numUnplaced == 0) {
     savePrey();
     simulate();
@@ -146,11 +146,11 @@ function step() {
 
   // Whenever there's an overlap, the predator reproduces and the prey dies.
   var overlaps = countOverlaps();
-  STATE['numPredators'] = Math.min(Math.floor((3*STATE['numPredators'])/4) + overlaps, ROWS*COLS);
-  STATE['numPrey'] = Math.min(STATE['numPrey'] - overlaps, ROWS*COLS);
+  STATE['numPredators'] = Math.floor( (3*STATE['numPredators'])/4 + overlaps );
+  STATE['numPrey'] = STATE['numPrey'] - overlaps; 
   // The surviving prey spawn buds.
-  debug("Reproduction created new prey: " + Math.floor(STATE['numPrey'] * 2));
-  STATE['numPrey'] = Math.floor(STATE['numPrey'] * 2);
+  //TODO the "stashed" prey do not reproduce?
+  STATE['numPrey'] = Math.floor(Math.min(STATE['numPrey'], ROWS*COLS) * 2);
 
   document.getElementById('stepper').hidden = true; //hide the button.
   debug(overlaps + " overlaps");
