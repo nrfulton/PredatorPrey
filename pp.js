@@ -154,14 +154,14 @@ function step() {
 
   document.getElementById('stepper').hidden = true; //hide the button.
   debug(overlaps + " overlaps");
-  alert('There are now ' + STATE['numPredators'] + ' predators and ' + STATE['numPrey'] + ' prey');
+  alert('There are now ' + STATE['numPredators'] + ' panthers and ' + STATE['numPrey'] + ' bunnies');
 
   //And start a new round or exit if done.
   if(STATE['numPrey'] == 0) {
     alert('all prey are dead; game over');
   }
   else if(STATE['numPredators'] == 0) {
-    alert('all predators are dead: game over');
+    alert('all panthers are dead: game over');
   }
   else {
     initializeBoard();
@@ -238,8 +238,8 @@ function debug(msg) {
 // MAIN
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-STATE['numPredators'] = prompt("Enter initial number of predators:");
-STATE['numPrey'] = prompt("Enter initial number of prey:");
+STATE['numPredators'] = prompt("Enter initial number of panthers:");
+STATE['numPrey'] = prompt("Enter initial number of bunnies:");
 initializeBoard();
 predatorSetup();
 
